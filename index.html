@@ -2,9 +2,113 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Green Berlin</title>
 </head>
 <body>
+----------------------------------------------------------------
+------------------------------login-----------------------------
+----------------------------------------------------------------
+<!-- Login-Screen -->
+<div id="login-screen">
+    <h1>Green Berlin</h1>
+    <form id="login-form">
+        <label for="username">Benutzername:</label>
+        <input type="text" id="username" name="username" required>
+        <label for="password">Passwort:</label>
+        <input type="password" id="password" name="password" required>
+        <button type="submit">Login</button>
+    </form>
+</div>
+----------------------------------------------------------------
+------------------------------main------------------------------
+----------------------------------------------------------------
+<!-- Main-Screen -->
+<div id="main-screen">
+    <h1>Willkommen, [Benutzername]!</h1>
+    <h2>Green Berlin</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Name/Titel</th>
+            <th>Description</th>
+            <th>Street and Number</th>
+            <th>ZIP</th>
+            <th>City</th>
+        </tr>
+        <tr>
+            <td>Reichstag</td>
+            <td>Glaskuppel ist schlecht gedämmt</td>
+            <td>Platz der Republik 1</td>
+            <td>10557</td>
+            <td>Berlin</td>
+        </tr>
+
+        <tr>
+            <td>AfD Landesverband Berlin</td>
+            <td>Mitglieder verschwenden Sauerstoff durch Atmung</td>
+            <td>Eichhorster Weg 80</td>
+            <td>13435</td>
+            <td>Berlin</td>
+        </tr>
+
+        <tr>
+            <td>Heizkraftwerk Moabit</td>
+            <td>Heizen mit Steinkohle setzt CO2 frei</td>
+            <td>Friedrich Krause Ufer 10</td>
+            <td>13353</td>
+            <td>Berlin</td>
+        </tr>
+        </thead>
+        <tbody id="location-table-body">
+        <!-- Hier werden die Standorte als Tabellenzeilen dynamisch hinzugefügt -->
+        </tbody>
+    </table>
+    <button id="add-btn">Add</button>
+    <button id="logout-btn">Logout</button>
+    <footer>
+        <a href="#">Impressum</a> | <a href="#">Datenschutzerklärung</a>
+    </footer>
+</div> <!--main-->
+----------------------------------------------------------------
+------------------------------add-------------------------------
+----------------------------------------------------------------
+<!-- Add-Screen -->
+<div id="add-screen">
+    <h1>Add Location</h1>
+    <form id="add-location-form">
+        <label for="location-name">Name/Titel:</label>
+        <input type="text" id="location-name" name="location-name" required><br>
+
+        <label for="location-description">Description:</label>
+        <textarea id="location-description" name="location-description" rows="4" cols="50" required></textarea><br>
+
+        <label for="location-street">Street and Number:</label>
+        <input type="text" id="location-street" name="location-street" required><br>
+
+        <label for="location-zip">ZIP:</label>
+        <input type="text" id="location-zip" name="location-zip" required><br>
+
+        <label for="location-city">City:</label>
+        <input type="text" id="location-city" name="location-city" required><br>
+
+        <!-- Hier kannst du die Funktionalität zum Hochladen von Bildern einfügen -->
+        <input type="file" id="location-image" name="location-image"><br>
+
+        <button type="submit" id="save-btn">Save/Submit</button>
+        <button type="button" id="cancel-btn">Cancel</button>
+    </form>
+</div> <!--add-->
+----------------------------------------------------------------
+------------------------------update----------------------------
+----------------------------------------------------------------
+<!-- Update/Delete-Screen -->
+<div id="update-delete-screen">
+    <!-- Hier kannst du die Eingabefelder für die Aktualisierung und Löschung von Standorten sowie das Bild des Standorts einfügen -->
+    <button id="update-btn">Update</button>
+    <button id="delete-btn">Delete</button>
+    <button id="cancel-update-btn">Cancel</button>
+</div>  <!--update-->
 
 </body>
 </html>
