@@ -140,13 +140,60 @@
 </div>
 <!-- Add-Screen Ende -->
 
-<!-- Update/Delete-Screen -->
+<!-- Update/Delete Screen -->
 <div class="container mt-5">
-    <button class="btn btn-warning">Update</button>
-    <button class="btn btn-danger">Delete</button>
-    <button class="btn btn-secondary">Cancel</button>
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-sm">
+
+                <div class="card-header">
+                    <h1>Edit/Delete Location</h1>
+                </div>
+
+                <div class="card-body">
+                    <form>
+                        <div class="mb-2">
+                            <label for="location-name-edit" class="form-label">Name/Titel:</label>
+                            <input type="text" id="location-name-edit" name="location-name" class="form-control"
+                                   value="Historic Park" required><br>
+                        </div>
+                        <div class="mb-2">
+                            <label for="location-description-edit" class="form-label">Description:</label>
+                            <textarea id="location-description-edit" name="location-description" class="form-control"
+                                      rows="4" required>A lovely spot with historic significance.</textarea><br>
+                        </div>
+                        <div class="mb-2">
+                            <label for="location-street-edit" class="form-label">Street and Number:</label>
+                            <input type="text" id="location-street-edit" name="location-street" class="form-control"
+                                   value="123 Liberty St" required><br>
+                        </div>
+                        <div class="mb-2">
+                            <label for="location-zip-edit" class="form-label">ZIP:</label>
+                            <input type="text" id="location-zip-edit" name="location-zip" class="form-control"
+                                   value="12345" required><br>
+                        </div>
+                        <div class="mb-2">
+                            <label for="location-city-edit" class="form-label">City:</label>
+                            <input type="text" id="location-city-edit" name="location-city" class="form-control"
+                                   value="Anytown" required><br>
+                        </div>
+                        <div class="mb-2">
+                            <label for="location-image-edit" class="form-label">Current Image:</label>
+                            <img src="/images/example.jpg" alt="Location Image" class="img-fluid img-thumbnail mb-3">
+                            <input type="file" id="location-image-edit" name="location-image" class="form-control"><br>
+                        </div>
+                        <button type="submit" class="btn btn-success">Update</button>
+                        <button type="button" class="btn btn-danger">Delete</button>
+                        <button type="button" class="btn btn-secondary">Cancel</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
 </div>
-<!-- Update/Delete-Screen Ende -->
+<!-- Update/Delete Screen Ende -->
+
 
 </body>
 </html>
