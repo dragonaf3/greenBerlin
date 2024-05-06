@@ -56,21 +56,21 @@
             <!-- Hier werden die Standorte als Tabellenzeilen dynamisch hinzugefügt -->
             <tr>
                 <td>Reichstag</td>
-                <td>Glaskuppel ist schlecht gedämmt</td>
+                <td>Glasdome is badly isolated</td>
                 <td>Platz der Republik 1</td>
                 <td>10557</td>
                 <td>Berlin</td>
             </tr>
             <tr>
                 <td>AfD Landesverband Berlin</td>
-                <td>Mitglieder verschwenden Sauerstoff durch Atmung</td>
+                <td>Members are wasting air by talking</td>
                 <td>Eichhorster Weg 80</td>
                 <td>13435</td>
                 <td>Berlin</td>
             </tr>
             <tr>
                 <td>Heizkraftwerk Moabit</td>
-                <td>Heizen mit Steinkohle setzt CO2 frei</td>
+                <td>Burning coal is freeing CO2</td>
                 <td>Friedrich Krause Ufer 10</td>
                 <td>13353</td>
                 <td>Berlin</td>
@@ -172,27 +172,43 @@
                         <div class="mb-2">
                             <label for="location-name-edit" class="form-label">Name/Titel:</label>
                             <input type="text" id="location-name-edit" name="location-name" class="form-control"
-                                   value="Historic Park" required><br>
+                                   value="Berghain" required><br>
                         </div>
                         <div class="mb-2">
                             <label for="location-description-edit" class="form-label">Description:</label>
                             <textarea id="location-description-edit" name="location-description" class="form-control"
-                                      rows="4" required>A lovely spot with historic significance.</textarea><br>
+                                      rows="4" required>Consumption of party drugs leads to a lower tap water quality.</textarea><br>
                         </div>
                         <div class="mb-2">
                             <label for="location-street-edit" class="form-label">Street and Number:</label>
                             <input type="text" id="location-street-edit" name="location-street" class="form-control"
-                                   value="123 Liberty St" required><br>
+                                   value="Ruedersdorferstr. 7" required><br>
                         </div>
                         <div class="mb-2">
                             <label for="location-zip-edit" class="form-label">ZIP:</label>
                             <input type="text" id="location-zip-edit" name="location-zip" class="form-control"
-                                   value="12345" required><br>
+                                   value="10243" required><br>
                         </div>
                         <div class="mb-2">
                             <label for="location-city-edit" class="form-label">City:</label>
                             <input type="text" id="location-city-edit" name="location-city" class="form-control"
-                                   value="Anytown" required><br>
+                                   value="Berlin" required><br>
+                        </div>
+                        <div class="mb-2">
+                            <label for="location-category-edit" class="form-label">Category:</label>
+                            <select id="location-category-edit" name="location category" class="form-control" required>
+                                <option value="" disabled selected>Select an option</option>
+                                <option value="Bike/Cyclists">Bike/Cyclists</option>
+                                <option value="Pedestrians">Pedestrians</option>
+                                <option value="Public Transportation">Public Transportation</option>
+                                <option value="Cars/Car-Infrastructure">Cars/Car-Infrastructure</option>
+                                <option value="Industry">Industry</option>
+                                <option value="Parks & Rec." selected>Parks & Rec.</option>
+                            </select>
+                        </div>
+                        <div class="mb-2">
+                            <label for="location-temporary-edit" class="form-label">Temporary:</label>
+                            <input type="checkbox" id="location-temporary-edit" name="location-temporary" value="temporary"><br>
                         </div>
                         <div class="mb-2">
                             <label for="location-image-edit" class="form-label">Current Image:</label>
