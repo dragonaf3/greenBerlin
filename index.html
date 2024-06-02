@@ -30,7 +30,7 @@
             <div class="card shadow-sm">
                 <div class="card-body">
                     <h1 class="card-title text-center fs-4">Login</h1>
-                    <form>
+                    <form id="login-form">
                         <div class="mb-3">
                             <label for="username" class="form-label">Username:</label>
                             <input type="text" id="username" name="username" class="form-control" required>
@@ -62,46 +62,22 @@
                 <th>ZIP</th>
                 <th>City</th>
                 <th>Category</th>
+                <th>Image</th>
             </tr>
             </thead>
 
-            <tbody>
+            <tbody id="tableBody">
             <!-- Hier werden die Standorte als Tabellenzeilen dynamisch hinzugefügt -->
-            <tr>
-                <td>Reichstag</td>
-                <td>Glas Dome is badly isolated</td>
-                <td>Platz der Republik 1</td>
-                <td>10557</td>
-                <td>Berlin</td>
-                <td>other</td>
-            </tr>
-            <tr>
-                <td>AfD Landesverband Berlin</td>
-                <td>Members are wasting air by talking</td>
-                <td>Eichhorster Weg 80</td>
-                <td>13435</td>
-                <td>Berlin</td>
-                <td>other</td>
-            </tr>
-            <tr>
-                <td>Heizkraftwerk Moabit</td>
-                <td>Burning coal is freeing CO2</td>
-                <td>Friedrich Krause Ufer 10</td>
-                <td>13353</td>
-                <td>Berlin</td>
-                <td>Industry</td>
-            </tr>
             </tbody>
         </table>
     </div>
 
-    <button class="btn btn-success">Add</button>
-    <button class="btn btn-danger">Logout</button>
+    <button class="btn btn-success" id="add-button">Add</button>
+    <button class="btn btn-danger" id="logout-button">Logout</button>
 </div>
 
-
 <!-- Add-Screen -->
-<div class="container mt-5 d-none">
+<div class="container mt-5 d-none" id="add-screen">
 
     <div class="row justify-content-center">
         <div class="col-lg-8">
@@ -112,7 +88,7 @@
                 </div>
 
                 <div class="card-body">
-                    <form>
+                    <form id="add-form">
                         <div class="mb-2">
                             <label for="location-name" class="form-label">Name/Title:</label>
                             <input type="text" id="location-name" name="location-name" class="form-control"
@@ -160,8 +136,8 @@
                         <div class="mb-2">
                             <input type="file" id="location-image" name="location-image" class="form-control"><br>
                         </div>
-                        <button type="submit" class="btn btn-success">Save/Submit</button>
-                        <button type="button" class="btn btn-secondary">Cancel</button>
+                        <button type="submit" class="btn btn-success" id="submit-button-add">Save/Submit</button>
+                        <button type="button" class="btn btn-secondary" id="cancel-button-add">Cancel</button>
                     </form>
                 </div>
 
@@ -171,18 +147,18 @@
 </div>
 <!-- Add-Screen Ende -->
 
-<!-- Update/Delete Screen -->
-<div class="container mt-5 d-none">
+<!-- Detail Screen -->
+<div class="container mt-5 d-none" id="detail-screen">
     <div class="row justify-content-center">
         <div class="col-lg-8">
             <div class="card shadow-sm">
 
                 <div class="card-header">
-                    <h1>Edit/Delete Location</h1>
+                    <h1>Details</h1>
                 </div>
 
                 <div class="card-body">
-                    <form>
+                    <form id="detail-form">
                         <div class="mb-2">
                             <label for="location-name-edit" class="form-label">Name/Title:</label>
                             <input type="text" id="location-name-edit" name="location-name" class="form-control"
@@ -210,6 +186,14 @@
                                    value="Berlin" required><br>
                         </div>
                         <div class="mb-2">
+                            <label for="longID" class="form-label">Longitude:</label>
+                            <input type="text" name="longitude" id="longID" class="form-control" readonly>
+                        </div>
+                        <div class="mb-2">
+                            <label for="latID" class="form-label">Latitude:</label>
+                            <input type="text" name="latitude" id="latID" class="form-control" readonly>
+                        </div>
+                        <div class="mb-2">
                             <label for="location-category-edit" class="form-label">Category:</label>
                             <select id="location-category-edit" name="location category" class="form-control" required>
                                 <option value="" disabled selected>Select an option</option>
@@ -218,7 +202,8 @@
                                 <option value="Public Transportation">Public Transportation</option>
                                 <option value="Cars/Car-Infrastructure">Cars/Car-Infrastructure</option>
                                 <option value="Industry">Industry</option>
-                                <option value="Parks & Rec." selected>Parks & Rec.</option>
+                                <option value="Parks & Rec.">Parks & Rec.</option>
+                                <option value="other">other</option>
                             </select>
                         </div>
                         <div class="mb-2">
@@ -228,12 +213,12 @@
                         </div>
                         <div class="mb-2">
                             <label for="location-image-edit" class="form-label">Current Image:</label>
-                            <img src="images/example.jpeg" alt="Location Image" class="img-fluid img-thumbnail mb-3">
+                            <img src="images/example.jpeg" alt="Location Image" class="img-fluid img-thumbnail mb-3" id="currentImage">
                             <input type="file" id="location-image-edit" name="location-image" class="form-control"><br>
                         </div>
-                        <button type="submit" class="btn btn-success">Update</button>
-                        <button type="button" class="btn btn-danger">Delete</button>
-                        <button type="button" class="btn btn-secondary">Cancel</button>
+                        <button type="submit" class="btn btn-success" id="update-button-detail">Update</button>
+                        <button type="button" class="btn btn-danger" id="delete-button-detail">Delete</button>
+                        <button type="button" class="btn btn-secondary" id="cancel-button-detail">Cancel</button>
                     </form>
                 </div>
 
@@ -241,7 +226,7 @@
         </div>
     </div>
 </div>
-<!-- Update/Delete Screen Ende -->
+<!-- Detail Screen Ende -->
 
 <!-- Footer -->
 <div class="container mb-4">
