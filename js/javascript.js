@@ -186,8 +186,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     logoutButton.addEventListener('click', function () {
         mainScreen.classList.add('d-none');
+
         document.getElementById('username').value = '';
         document.getElementById('password').value = '';
+
         loginScreen.classList.remove('d-none');
 
         currentUserRole = null;
