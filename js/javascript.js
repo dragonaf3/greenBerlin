@@ -169,6 +169,8 @@ document.addEventListener("DOMContentLoaded", function () {
     logoutButton.addEventListener('click', function () {
         // Beim Klicken auf den Logout-Button, blende den Main-Screen aus und zeige den Login-Screen an
         mainScreen.classList.add('d-none');
+        document.getElementById('username').value = '';
+        document.getElementById('password').value = '';
         loginScreen.classList.remove('d-none');
 
         currentUserRole = null;
