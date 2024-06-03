@@ -82,7 +82,6 @@ document.addEventListener("DOMContentLoaded", function () {
             longitude: "13.43916491",
             latitude: "52.50666464",
             image: "images/Berghain.jpg"
-
         }
     ];
 
@@ -153,7 +152,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     loginForm.addEventListener('submit', function (event) {
-        event.preventDefault(); // Verhindert das Standard-Formular-Verhalten
+        event.preventDefault();
 
         // get username and password
         const enteredUsername = document.getElementById('username').value;
@@ -167,7 +166,7 @@ document.addEventListener("DOMContentLoaded", function () {
             loginScreen.classList.add('d-none');
             mainScreen.classList.remove('d-none');
             updateWelcomeMessage(user.name);
-            populateTable(tableData); // Populate the table with data
+            populateTable(tableData);
 
             if (user.role === 'admin') {
                 addButton.classList.remove('d-none');
@@ -175,13 +174,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 addButton.classList.add('d-none');
             }
         } else {
-            // Wenn falsch, zeige eine Fehlermeldung
             alert('Wrong username or password!');
         }
     });
 
     logoutButton.addEventListener('click', function () {
-        // Beim Klicken auf den Logout-Button, blende den Main-Screen aus und zeige den Login-Screen an
         mainScreen.classList.add('d-none');
         document.getElementById('username').value = '';
         document.getElementById('password').value = '';
