@@ -173,6 +173,8 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById('password').value = '';
         loginScreen.classList.remove('d-none');
 
+
+
         currentUserRole = null;
     });
 
