@@ -59,6 +59,7 @@ document.addEventListener("DOMContentLoaded", function () {
             latitude: "52.60006332397461",
             image: "images/afdLandesverband.jpeg"
         },
+        /*
         {
             name: "Heizkraftwerk Moabit",
             description: "Burning coal is freeing CO2",
@@ -69,6 +70,19 @@ document.addEventListener("DOMContentLoaded", function () {
             longitude: "13.3503144",
             latitude: "52.5377307",
             image: "images/Kraftwerk_Moabit_at_Berlin-Spandauer-Schifffahrtskanal_01.jpg"
+        },
+        */
+        {
+            name: "Berghain",
+            description: "Use of Partydrugs is lowering tap water quality",
+            street: "Am Wriezener Bahnhof",
+            zip: "10243",
+            city: "Berlin",
+            category: "Parks & Rec.",
+            longitude: "13.43916491",
+            latitude: "52.50666464",
+            image: "images/Berghain.jpg"
+
         }
     ];
 
