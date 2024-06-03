@@ -1,22 +1,28 @@
 document.addEventListener("DOMContentLoaded", function () {
+    // Screens
     const mainScreen = document.getElementById('main-screen');
     const loginScreen = document.getElementById('login-screen');
     const detailScreen = document.getElementById('detail-screen');
     const addScreen = document.getElementById('add-screen')
 
+    // Forms
     const loginForm = document.getElementById('login-form');
     const addForm = document.getElementById('add-form');
     const detailForm = document.getElementById('detail-form');
 
+    // Main Screen Buttons
     const logoutButton = document.getElementById('logout-button');
     const addButton = document.getElementById('add-button');
 
+    // Detail Screen Buttons
     const updateButtonDetail = document.getElementById('update-button-detail');
     const deleteButtonDetail = document.getElementById('delete-button-detail');
     const cancelButtonDetail = document.getElementById('cancel-button-detail');
 
+    // Add Screen Buttons
     const cancelButtonAdd = document.getElementById('cancel-button-add');
 
+    // Variables
     let currentUserRole = null;
     let detailData = null;
 
