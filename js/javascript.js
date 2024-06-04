@@ -1,22 +1,28 @@
 document.addEventListener("DOMContentLoaded", function () {
+    // Screens
     const mainScreen = document.getElementById('main-screen');
     const loginScreen = document.getElementById('login-screen');
     const detailScreen = document.getElementById('detail-screen');
     const addScreen = document.getElementById('add-screen')
 
+    // Forms
     const loginForm = document.getElementById('login-form');
     const addForm = document.getElementById('add-form');
     const detailForm = document.getElementById('detail-form');
 
+    // Main Screen Buttons
     const logoutButton = document.getElementById('logout-button');
     const addButton = document.getElementById('add-button');
 
+    // Detail Screen Buttons
     const updateButtonDetail = document.getElementById('update-button-detail');
     const deleteButtonDetail = document.getElementById('delete-button-detail');
     const cancelButtonDetail = document.getElementById('cancel-button-detail');
 
+    // Add Screen Buttons
     const cancelButtonAdd = document.getElementById('cancel-button-add');
 
+    // Variables
     let currentUserRole = null;
     let detailData = null;
 
@@ -82,7 +88,6 @@ document.addEventListener("DOMContentLoaded", function () {
             longitude: "13.43916491",
             latitude: "52.50666464",
             image: "images/Berghain.jpg"
-
         }
     ];
 
@@ -153,7 +158,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     loginForm.addEventListener('submit', function (event) {
-        event.preventDefault(); // Verhindert das Standard-Formular-Verhalten
+        event.preventDefault();
 
         // get username and password
         const enteredUsername = document.getElementById('username').value;
@@ -167,7 +172,7 @@ document.addEventListener("DOMContentLoaded", function () {
             loginScreen.classList.add('d-none');
             mainScreen.classList.remove('d-none');
             updateWelcomeMessage(user.name);
-            populateTable(tableData); // Populate the table with data
+            populateTable(tableData);
 
             if (user.role === 'admin') {
                 addButton.classList.remove('d-none');
@@ -175,16 +180,16 @@ document.addEventListener("DOMContentLoaded", function () {
                 addButton.classList.add('d-none');
             }
         } else {
-            // Wenn falsch, zeige eine Fehlermeldung
             alert('Wrong username or password!');
         }
     });
 
     logoutButton.addEventListener('click', function () {
-        // Beim Klicken auf den Logout-Button, blende den Main-Screen aus und zeige den Login-Screen an
         mainScreen.classList.add('d-none');
+
         document.getElementById('username').value = '';
         document.getElementById('password').value = '';
+
         loginScreen.classList.remove('d-none');
 
         currentUserRole = null;
