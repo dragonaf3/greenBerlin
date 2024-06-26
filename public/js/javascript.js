@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const mainScreen = document.getElementById('main-screen');
     const loginScreen = document.getElementById('login-screen');
     const detailScreen = document.getElementById('detail-screen');
-    const addScreen = document.getElementById('add-screen')
+    const addScreen = document.getElementById('add-screen');
 
     // Forms
     const loginForm = document.getElementById('login-form');
@@ -26,71 +26,6 @@ document.addEventListener("DOMContentLoaded", function () {
     let currentUserRole = null;
     let detailData = null;
 
-    // Users and Passwords mit Rollen und Namen
-    const users = [
-        {
-            username: "admina",
-            password: "password",
-            role: "admin",
-            name: "Mina"
-        },
-        {
-            username: "normalo",
-            password: "password",
-            role: "non-admin",
-            name: "Norman"
-        }
-    ];
-    // Daten für die Tabelle
-    const tableData = [
-        {
-            name: "Reichstag",
-            description: "Glas Dome is badly isolated",
-            street: "Platz der Republik 1",
-            zip: "10557",
-            city: "Berlin",
-            category: "other",
-            longitude: "13.3762818",
-            latitude: "52.5185941",
-            image: "images/reichstag.jpg"
-        },
-        {
-            name: "AfD Landesverband Berlin",
-            description: "Members are wasting air by talking",
-            street: "Eichhorster Weg 80",
-            zip: "13435",
-            city: "Berlin",
-            category: "other",
-            longitude: "13.341176986694336",
-            latitude: "52.60006332397461",
-            image: "images/afdLandesverband.jpeg"
-        },
-        /*
-        {
-            name: "Heizkraftwerk Moabit",
-            description: "Burning coal is freeing CO2",
-            street: "Friedrich Krause Ufer 10",
-            zip: "13353",
-            city: "Berlin",
-            category: "Industry",
-            longitude: "13.3503144",
-            latitude: "52.5377307",
-            image: "images/Kraftwerk_Moabit_at_Berlin-Spandauer-Schifffahrtskanal_01.jpg"
-        },
-        */
-        {
-            name: "Berghain",
-            description: "Use of Partydrugs is lowering tap water quality",
-            street: "Am Wriezener Bahnhof",
-            zip: "10243",
-            city: "Berlin",
-            category: "Parks & Rec.",
-            longitude: "13.43916491",
-            latitude: "52.50666464",
-            image: "images/Berghain.jpg"
-        }
-    ];
-
     function updateWelcomeMessage(name) {
         const welcomeMessage = document.getElementById('welcome-message');
         welcomeMessage.textContent = "Welcome, " + name + "!";
@@ -99,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
     function populateTable(data) {
         const tbody = document.getElementById('tableBody');
         tbody.innerHTML = ''; // Clear existing rows
-        data.forEach((row, index) => {
+        data.forEach((row) => {
             const tr = document.createElement('tr');
             tr.innerHTML = `
                 <td>${row.name}</td>
@@ -110,22 +45,22 @@ document.addEventListener("DOMContentLoaded", function () {
                 <td>${row.category}</td>
                 <td><img src="${row.image}" alt="${row.name} Image" class="img-thumbnail" width="150"></td>
             `;
-            tr.addEventListener('click', () => showDetailScreen(index));
+            tr.addEventListener('click', () => showDetailScreen(row));
             tbody.appendChild(tr);
         });
     }
 
-    function showDetailScreen(index) {
-        detailData = tableData[index];
-        document.getElementById('location-name-edit').value = detailData.name;
-        document.getElementById('location-description-edit').value = detailData.description;
-        document.getElementById('location-street-edit').value = detailData.street;
-        document.getElementById('location-zip-edit').value = detailData.zip;
-        document.getElementById('location-city-edit').value = detailData.city;
-        document.getElementById('location-category-edit').value = detailData.category;
-        document.getElementById('longID').value = detailData.longitude;
-        document.getElementById('latID').value = detailData.latitude;
-        document.getElementById('currentImage').src = detailData.image;
+    function showDetailScreen(data) {
+        detailData = data;
+        document.getElementById('location-name-edit').value = data.name;
+        document.getElementById('location-description-edit').value = data.description;
+        document.getElementById('location-street-edit').value = data.street;
+        document.getElementById('location-zip-edit').value = data.zip;
+        document.getElementById('location-city-edit').value = data.city;
+        document.getElementById('location-category-edit').value = data.category;
+        document.getElementById('longID').value = data.longitude;
+        document.getElementById('latID').value = data.latitude;
+        document.getElementById('currentImage').src = data.image;
 
         if (currentUserRole === 'admin') {
             updateButtonDetail.classList.remove('d-none');
@@ -142,8 +77,6 @@ document.addEventListener("DOMContentLoaded", function () {
     async function getGeocoordinates(address) {
         const apiKey = 'AIzaSyDBOkC5oZAIDMuWgWEHr01OFMS_pn_VbYQ';
         const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${apiKey}`);
-        console.log(encodeURIComponent(address));
-        console.log()
         if (!response.ok) {
             throw new Error('Geoservice request failed');
         }
@@ -157,22 +90,27 @@ document.addEventListener("DOMContentLoaded", function () {
         };
     }
 
-    loginForm.addEventListener('submit', function (event) {
+    loginForm.addEventListener('submit', async function (event) {
         event.preventDefault();
 
-        // get username and password
         const enteredUsername = document.getElementById('username').value;
         const enteredPassword = document.getElementById('password').value;
 
-        // checken ob Username und Password korrekt sind
-        const user = users.find(user => user.username === enteredUsername && user.password === enteredPassword);
+        const response = await fetch('/users', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({username: enteredUsername, password: enteredPassword})
+        });
 
-        if (user) {
+        if (response.status === 200) {
+            const user = await response.json();
             currentUserRole = user.role;
             loginScreen.classList.add('d-none');
             mainScreen.classList.remove('d-none');
             updateWelcomeMessage(user.name);
-            populateTable(tableData);
+            fetchLocations();
 
             if (user.role === 'admin') {
                 addButton.classList.remove('d-none');
@@ -186,12 +124,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     logoutButton.addEventListener('click', function () {
         mainScreen.classList.add('d-none');
-
         document.getElementById('username').value = '';
         document.getElementById('password').value = '';
-
         loginScreen.classList.remove('d-none');
-
         currentUserRole = null;
     });
 
@@ -225,29 +160,32 @@ document.addEventListener("DOMContentLoaded", function () {
 
         try {
             const {latitude, longitude} = await getGeocoordinates(address);
-            const imageURL = URL.createObjectURL(imageFile);
-            console.log(longitude);
-            console.log(latitude)
-            console.log(imageURL)
+            const formData = new FormData();
+            formData.append('name', name);
+            formData.append('description', description);
+            formData.append('street', street);
+            formData.append('zip', zip);
+            formData.append('city', city);
+            formData.append('category', category);
+            formData.append('longitude', longitude);
+            formData.append('latitude', latitude);
+            formData.append('image', imageFile);
 
-            tableData.push({
-                name,
-                description,
-                street,
-                zip,
-                city,
-                category,
-                longitude,
-                latitude,
-                image: imageURL
+            const response = await fetch('/loc', {
+                method: 'POST',
+                body: formData
             });
 
-            mainScreen.classList.remove('d-none');
-            addScreen.classList.add('d-none');
-
-            populateTable(tableData);
+            if (response.status === 201) {
+                alert('Location added successfully');
+                mainScreen.classList.remove('d-none');
+                addScreen.classList.add('d-none');
+                fetchLocations();
+            } else {
+                alert('Failed to add location');
+            }
         } catch (error) {
-            alert("Error in the geoservice request ");
+            alert("Error in the geoservice request");
             console.error('Error in the geoservice request:', error);
         }
     });
@@ -257,14 +195,19 @@ document.addEventListener("DOMContentLoaded", function () {
         addScreen.classList.add('d-none');
     });
 
-    deleteButtonDetail.addEventListener('click', function () {
-        tableData.splice(tableData.indexOf(detailData), 1);
-        detailData = null;
+    deleteButtonDetail.addEventListener('click', async function () {
+        const response = await fetch(`/loc/${detailData._id}`, {
+            method: 'DELETE'
+        });
 
-        mainScreen.classList.remove('d-none');
-        detailScreen.classList.add('d-none');
-
-        populateTable(tableData);
+        if (response.status === 204) {
+            alert('Location deleted successfully');
+            mainScreen.classList.remove('d-none');
+            detailScreen.classList.add('d-none');
+            fetchLocations();
+        } else {
+            alert('Failed to delete location');
+        }
     });
 
     detailForm.addEventListener('submit', async function (event) {
@@ -282,29 +225,77 @@ document.addEventListener("DOMContentLoaded", function () {
 
         try {
             const {latitude, longitude} = await getGeocoordinates(address);
-            const imageURL = imageFile ? URL.createObjectURL(imageFile) : detailData.image;
+            const formData = new FormData();
+            formData.append('name', name);
+            formData.append('description', description);
+            formData.append('street', street);
+            formData.append('zip', zip);
+            formData.append('city', city);
+            formData.append('category', category);
+            formData.append('longitude', longitude);
+            formData.append('latitude', latitude);
+            if (imageFile) {
+                formData.append('image', imageFile);
+            }
 
-            detailData.name = name;
-            detailData.description = description;
-            detailData.street = street;
-            detailData.zip = zip;
-            detailData.city = city;
-            detailData.category = category;
-            detailData.longitude = longitude;
-            detailData.latitude = latitude;
-            detailData.image = imageURL;
+            const response = await fetch(`/loc/${detailData._id}`, {
+                method: 'PUT',
+                body: formData
+            });
 
-            tableData[tableData.indexOf(detailData)] = detailData;
-            detailData = null;
-
-            mainScreen.classList.remove('d-none');
-            detailScreen.classList.add('d-none');
-
-            populateTable(tableData);
+            if (response.status === 204) {
+                alert('Location updated successfully');
+                mainScreen.classList.remove('d-none');
+                detailScreen.classList.add('d-none');
+                fetchLocations();
+            } else {
+                alert('Failed to update location');
+            }
         } catch (error) {
             alert(`Error in the geoservice request`);
             console.error('Error in the geoservice request:', error);
         }
     });
 
+    async function fetchLocations() {
+        const response = await fetch('/loc');
+        if (response.status === 200) {
+            const locations = await response.json();
+            populateTable(locations);
+        }
+    }
+
+    function attachEventListeners() {
+        document.querySelectorAll('.btn-edit').forEach(button => {
+            button.addEventListener('click', async () => {
+                const locationId = button.dataset.id;
+                const response = await fetch(`/loc/${locationId}`);
+                if (response.status === 200) {
+                    const location = await response.json();
+                    showDetailScreen(location);
+                } else {
+                    alert('Failed to load location details');
+                }
+            });
+        });
+
+        document.querySelectorAll('.btn-delete').forEach(button => {
+            button.addEventListener('click', async () => {
+                const locationId = button.dataset.id;
+                const response = await fetch(`/loc/${locationId}`, {
+                    method: 'DELETE'
+                });
+
+                if (response.status === 204) {
+                    alert('Location deleted successfully');
+                    fetchLocations();
+                } else {
+                    alert('Failed to delete location');
+                }
+            });
+        });
+    }
+
+    // Initial data fetch
+    fetchLocations();
 });
