@@ -7,6 +7,3 @@
 ## Beschreibung
 Green Berlin ist eine Single-Page-Application, die im Frontend mit React und TypeScript und im Backend mit [?] umgesetzt wird.  
 Admin-Nutzer können Orte hinzufügen, bearbeiten und löschen, während reguläre Nutzer die Orte nur ansehen können.
-
-##Quellen
-https://de.m.wikipedia.org/wiki/Datei:Thumb_up_icon.svg
