@@ -62,7 +62,9 @@ export class LocationsController {
         @Body() createLocationDto: CreateLocationDto,
         @UploadedFile() file: Express.Multer.File,
     ) {
-        if (!file) throw new BadRequestException('Kein Bild hochgeladen.');
+        if (!file) {
+            return this.locationsService.create(createLocationDto);
+        }
         createLocationDto.image = `/uploads/${file.filename}`;
         return this.locationsService.create(createLocationDto);
     }
