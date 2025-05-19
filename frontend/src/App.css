@@ -1,93 +1,122 @@
-/* Gesamt-Seiten-Hintergrund */
+/* Root-Variablen für Farben, Abstände und Schatten */
+:root {
+    --color-bg: #f9fafb;
+    --color-primary: #10b981;
+    --color-primary-dark: #059669;
+    --color-text: #111827;
+    --color-text-muted: #4b5563;
+    --border-radius: 0.75rem;
+    --gap: 1.5rem;
+    --shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Gesamt-Seiten-Hintergrund und Typografie */
 body {
-    background-color: #f0fdf4; /* sehr helles Mint-Grün */
+    background-color: var(--color-bg);
     margin: 0;
-    font-family: sans-serif;
+    font-family: "Inter", sans-serif;
+    color: var(--color-text);
 }
 
-/* Wrapper um deine Card-Liste */
+/* Responsive Grid-Layout */
 .location-list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;  /* horizontales Zentrieren */
-    gap: 1.5rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--gap);
     padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-/* Die einzelnen Cards */
+/* Card-Grundstruktur */
 .location-card {
-    background-color: #10b981;     /* smaragd-grün */
-    color: white;                  /* damit der Text gut lesbar ist */
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    padding: 1rem;
-    width: 280px;                  /* fixe Breite für gleichmäßiges Grid */
+    background-color: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
     display: flex;
     flex-direction: column;
-    align-items: center;           /* Content zentrieren */
-    text-align: center;
-    transition: transform 0.2s;
+    transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .location-card:hover {
-    transform: translateY(-4px);
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 25px rgba(0, 0, 0, 0.15);
 }
 
-/* Bild-Styling */
+/* Bild-Styling mit Zoom-Effekt */
 .location-card img {
     width: 100%;
-    height: 160px;
+    aspect-ratio: 16/9;
     object-fit: cover;
-    border-radius: 8px;
-    margin-bottom: 0.75rem;
+    transition: transform 0.3s;
 }
 
-/* Fallback-Box, wenn kein Bild */
-.no-image {
-    width: 100%;
-    height: 160px;
+.location-card:hover img {
+    transform: scale(1.05);
+}
+
+/* Inhalt der Karte */
+.location-card .card-content {
+    padding: 1.25rem;
+    flex: 1;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(255,255,255,0.2);
-    border-radius: 8px;
-    margin-bottom: 0.75rem;
-    font-style: italic;
+    flex-direction: column;
 }
 
-/* Titel */
 .location-card h2 {
-    font-size: 1.25rem;
-    margin: 0.5rem 0;
+    font-size: 1.5rem;
+    margin: 0 0 0.5rem;
+    color: var(--color-primary-dark);
 }
 
-/* Beschreibung */
-.description {
-    font-size: 0.9rem;
-    margin-bottom: 0.5rem;
-    color: #ecfdf5;
+.location-card .description {
+    font-size: 1rem;
+    flex: 1;
+    margin-bottom: 1rem;
+    color: var(--color-text-muted);
 }
 
-/* Adress- und Category-Text */
 .location-card p {
-    margin: 0.25rem 0;
     font-size: 0.9rem;
-    color: #f0fdf4;
+    margin: 0.25rem 0;
+    color: var(--color-text-muted);
 }
 
-/* Like-Button */
+/* Like-Button mit Pill-Form */
 .btn-like {
-    margin-top: auto;              /* schiebt den Button ans Kartenende */
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 6px;
-    background: #059669;           /* etwas dunkleres Grün */
-    cursor: pointer;
-    font-size: 0.9rem;
+    align-self: flex-start;
+    padding: 0.5rem 1.25rem;
+    background-color: var(--color-primary);
     color: white;
-    transition: background 0.2s;
+    border: none;
+    border-radius: 9999px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.3s;
 }
 
 .btn-like:hover {
-    background: #047857;
+    background-color: var(--color-primary-dark);
+}
+
+/* Dunkel-Modus-Unterstützung */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --color-bg: #31371f;
+        --color-text: #f9fafb;
+        --color-text-muted: #d1d5db;
+    }
+
+    body {
+        background-color: var(--color-bg);
+    }
+
+    .location-card {
+        background-color: #374151;
+    }
+
+    .btn-like {
+        background-color: #059669;
+    }
 }
