@@ -38,6 +38,7 @@
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     max-width: 1200px;
     margin: 0 auto;
+    align-items: stretch; /* sorgt dafür, dass alle Grid-Items gleich hoch werden */
 }
 
 /* Karten */
@@ -51,6 +52,7 @@
     transition: transform 0.2s, box-shadow 0.2s;
     max-width: 350px;
     margin: var(--gap) auto;
+    height: 100%;           /* füllt die Höhe der Grid-Zelle komplett */
 }
 
 .location-card:hover {
@@ -70,7 +72,7 @@
 /* Karten-Inhalt */
 .card-content {
     padding: calc(var(--gap) * 0.75);
-    flex: 1;
+    flex: 1;                 /* sorgt dafür, dass der Content-Bereich wächst und der Button unten bleibt */
     display: flex;
     flex-direction: column;
 }
@@ -97,7 +99,7 @@
 /* Like-Button */
 .btn-like {
     align-self: flex-start;
-    padding: 0.4rem 1rem;
+    padding: 0.75rem 1rem;   /* mehr vertikaler Abstand */
     background-color: var(--color-primary);
     color: #fff;
     border: none;
