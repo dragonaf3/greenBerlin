@@ -1,4 +1,6 @@
-/* App-Layout */
+/* App.css */
+
+/* 1. App-Layout */
 .app-container {
     display: flex;
     flex-direction: column;
@@ -7,17 +9,21 @@
 
 .app-content {
     flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
-/* Header */
+/* 2. Header */
 .header {
     background-color: var(--color-primary);
     color: #fff;
     padding: var(--gap);
     display: flex;
+    flex-wrap: wrap;               /* Header-Elemente umbrechen auf kleinen Screens */
     align-items: center;
     justify-content: center;
     gap: var(--gap);
+    text-align: center;
 }
 
 .header__logo {
@@ -30,18 +36,36 @@
     font-weight: 600;
 }
 
-/* Location-Grid */
+/* 3. Responsive Grid */
 .location-list {
+    flex: 1;
     display: grid;
     gap: var(--gap);
     padding: var(--gap);
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    max-width: 1200px;
     margin: 0 auto;
-    align-items: stretch; /* sorgt dafür, dass alle Grid-Items gleich hoch werden */
+    max-width: 1200px;
+    /* Default: eine Spalte */
+    grid-template-columns: 1fr;
+    /* gleiche Zeilenhöhe */
+    grid-auto-rows: 1fr;
+    align-items: stretch;
 }
 
-/* Karten */
+/* ab Tablet (>= 640px): zwei Spalten */
+@media (min-width: 640px) {
+    .location-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* ab Desktop (>= 1024px): drei Spalten */
+@media (min-width: 1024px) {
+    .location-list {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* 4. Karten */
 .location-card {
     background-color: var(--color-primary-light);
     border-radius: var(--radius);
@@ -49,10 +73,8 @@
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    height: 100%;               /* füllt die Höhe jeder Grid-Zelle */
     transition: transform 0.2s, box-shadow 0.2s;
-    max-width: 350px;
-    margin: var(--gap) auto;
-    height: 100%;           /* füllt die Höhe der Grid-Zelle komplett */
 }
 
 .location-card:hover {
@@ -60,7 +82,7 @@
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
 }
 
-/* Bilder in den Karten */
+/* 5. Bilder */
 .location-card img {
     display: block;
     width: 100%;
@@ -69,10 +91,10 @@
     object-fit: cover;
 }
 
-/* Karten-Inhalt */
+/* 6. Karten-Inhalt */
 .card-content {
     padding: calc(var(--gap) * 0.75);
-    flex: 1;                 /* sorgt dafür, dass der Content-Bereich wächst und der Button unten bleibt */
+    flex: 1;                    /* füllt verbleibenden Platz, schiebt Button ans Ende */
     display: flex;
     flex-direction: column;
 }
@@ -96,10 +118,10 @@
     font-size: 0.9rem;
 }
 
-/* Like-Button */
+/* 7. Like-Button */
 .btn-like {
     align-self: flex-start;
-    padding: 0.75rem 1rem;   /* mehr vertikaler Abstand */
+    padding: 0.75rem 1rem;
     background-color: var(--color-primary);
     color: #fff;
     border: none;
@@ -113,7 +135,7 @@
     background-color: var(--color-primary-dark);
 }
 
-/* Footer */
+/* 8. Footer */
 .footer {
     background-color: var(--color-primary);
     color: #fff;
