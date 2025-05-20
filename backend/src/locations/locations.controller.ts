@@ -9,7 +9,7 @@ import {
     UseInterceptors,
     UploadedFile,
     HttpCode,
-    BadRequestException,
+
 } from '@nestjs/common';
 import {
     ApiTags,
@@ -18,20 +18,20 @@ import {
     ApiConsumes,
     ApiBody,
 } from '@nestjs/swagger';
-import { FileInterceptor } from '@nestjs/platform-express';
+import {FileInterceptor} from '@nestjs/platform-express';
 
-import { LocationsService } from './locations.service';
-import { CreateLocationDto } from './dto/create-location.dto';
-import { UpdateLocationDto } from './dto/update-location.dto';
+import {LocationsService} from './locations.service';
+import {CreateLocationDto} from './dto/create-location.dto';
+import {UpdateLocationDto} from './dto/update-location.dto';
 
 @ApiTags('locations')
 @Controller('locations')
 export class LocationsController {
-    constructor(private readonly locationsService: LocationsService) {}
+    constructor(private readonly locationsService: LocationsService) {
+    }
 
-    // ← Hier wieder einfügen:
     @Get()
-    @ApiOperation({ summary: 'Alle Locations abrufen' })
+    @ApiOperation({summary: 'Alle Locations abrufen'})
     @ApiResponse({
         status: 200,
         description: 'Liste aller Locations',
@@ -42,7 +42,7 @@ export class LocationsController {
     }
 
     @Get(':id')
-    @ApiOperation({ summary: 'Eine Location nach ID abrufen' })
+    @ApiOperation({summary: 'Eine Location nach ID abrufen'})
     @ApiResponse({
         status: 200,
         description: 'Die Location',
@@ -52,11 +52,10 @@ export class LocationsController {
         return this.locationsService.findOne(id);
     }
 
-    // Dein bereits vorhandener POST-Handler
     @Post()
-    @ApiOperation({ summary: 'Neue Location anlegen' })
+    @ApiOperation({summary: 'Neue Location anlegen'})
     @ApiConsumes('multipart/form-data')
-    @ApiBody({ type: CreateLocationDto })
+    @ApiBody({type: CreateLocationDto})
     @UseInterceptors(FileInterceptor('image'))
     async create(
         @Body() createLocationDto: CreateLocationDto,
@@ -69,11 +68,10 @@ export class LocationsController {
         return this.locationsService.create(createLocationDto);
     }
 
-    // und auch PUT/DELETE wieder einfügen, falls Du sie brauchst…
     @Put(':id')
-    @ApiOperation({ summary: 'Vorhandene Location aktualisieren' })
+    @ApiOperation({summary: 'Vorhandene Location aktualisieren'})
     @ApiConsumes('multipart/form-data')
-    @ApiBody({ type: UpdateLocationDto })
+    @ApiBody({type: UpdateLocationDto})
     @UseInterceptors(FileInterceptor('image'))
     async update(
         @Param('id') id: string,
@@ -86,8 +84,8 @@ export class LocationsController {
 
     @Delete(':id')
     @HttpCode(204)
-    @ApiOperation({ summary: 'Location löschen' })
-    @ApiResponse({ status: 204, description: 'Location erfolgreich gelöscht' })
+    @ApiOperation({summary: 'Location löschen'})
+    @ApiResponse({status: 204, description: 'Location erfolgreich gelöscht'})
     async remove(@Param('id') id: string) {
         return this.locationsService.remove(id);
     }

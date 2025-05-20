@@ -1,4 +1,3 @@
-// src/locations/dto/create-location.dto.ts
 import {ApiProperty} from '@nestjs/swagger';
 import {IsString, IsNotEmpty, IsOptional, Matches, IsNumber} from 'class-validator';
 import {Type} from 'class-transformer';
