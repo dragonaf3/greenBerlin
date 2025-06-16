@@ -18,34 +18,35 @@ export const LocationCard = ({ location }: Props) => {
         : noImage;
 
     return (
-        <div className="location-card">
-            {/* Bild (entweder remote oder lokales noImage.png) */}
-            <img
-                src={imgUrl}
-                alt={location.name ?? 'No image available'}
-            />
-
-            {/* Inhalt */}
-            <div className="card-content">
-                <h2>{location.name}</h2>
+        <div className="card bg-base-100 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 h-full">
+            <figure>
+                <img
+                    src={imgUrl}
+                    alt={location.name ?? 'No image available'}
+                    className="w-full h-48 object-cover"
+                />
+            </figure>
+            
+            <div className="card-body flex-1 flex flex-col">
+                <h2 className="card-title text-primary">{location.name}</h2>
 
                 {location.description && (
-                    <p className="description">{location.description}</p>
+                    <p className="text-base-content/70 flex-grow text-sm">{location.description}</p>
                 )}
 
-                <p>
-                    {location.street}, {location.zip} {location.city}
-                </p>
+                <div className="text-sm text-base-content/60 space-y-1">
+                    <p>{location.street}, {location.zip} {location.city}</p>
+                    <p>Category: {location.category}</p>
+                </div>
 
-                <p>Category: {location.category}</p>
-
-                {/* Like-Button */}
-                <button
-                    onClick={() => setLikes((l) => l + 1)}
-                    className="btn-like"
-                >
-                    👍 Like ({likes})
-                </button>
+                <div className="card-actions justify-start mt-auto">
+                    <button
+                        onClick={() => setLikes((l) => l + 1)}
+                        className="btn btn-primary btn-sm"
+                    >
+                        👍 Like ({likes})
+                    </button>
+                </div>
             </div>
         </div>
     );
