@@ -9,7 +9,8 @@ import {
     UseInterceptors,
     UploadedFile,
     HttpCode,
-
+    UseGuards,
+    Request,
 } from '@nestjs/common';
 import {
     ApiTags,
@@ -17,12 +18,14 @@ import {
     ApiResponse,
     ApiConsumes,
     ApiBody,
+    ApiBearerAuth,
 } from '@nestjs/swagger';
 import {FileInterceptor} from '@nestjs/platform-express';
 
 import {LocationsService} from './locations.service';
 import {CreateLocationDto} from './dto/create-location.dto';
 import {UpdateLocationDto} from './dto/update-location.dto';
+import {JwtAuthGuard} from '../auth/jwt-auth.guard';
 
 @ApiTags('locations')
 @Controller('locations')
@@ -53,6 +56,8 @@ export class LocationsController {
     }
 
     @Post()
+    @UseGuards(JwtAuthGuard)
+    @ApiBearerAuth()
     @ApiOperation({summary: 'Neue Location anlegen'})
     @ApiConsumes('multipart/form-data')
     @ApiBody({type: CreateLocationDto})
@@ -60,15 +65,18 @@ export class LocationsController {
     async create(
         @Body() createLocationDto: CreateLocationDto,
         @UploadedFile() file: Express.Multer.File,
+        @Request() req,
     ) {
         if (!file) {
-            return this.locationsService.create(createLocationDto);
+            return this.locationsService.create(createLocationDto, req.user.userId);
         }
         createLocationDto.image = `/uploads/${file.filename}`;
-        return this.locationsService.create(createLocationDto);
+        return this.locationsService.create(createLocationDto, req.user.userId);
     }
 
     @Put(':id')
+    @UseGuards(JwtAuthGuard)
+    @ApiBearerAuth()
     @ApiOperation({summary: 'Vorhandene Location aktualisieren'})
     @ApiConsumes('multipart/form-data')
     @ApiBody({type: UpdateLocationDto})
@@ -76,17 +84,21 @@ export class LocationsController {
     async update(
         @Param('id') id: string,
         @Body() updateLocationDto: UpdateLocationDto,
+        @Request() req,
         @UploadedFile() file?: Express.Multer.File,
     ) {
         if (file) updateLocationDto.image = `/uploads/${file.filename}`;
-        return this.locationsService.update(id, updateLocationDto);
+        return this.locationsService.update(id, updateLocationDto, req.user.userId);
     }
 
     @Delete(':id')
+    @UseGuards(JwtAuthGuard)
+    @ApiBearerAuth()
     @HttpCode(204)
     @ApiOperation({summary: 'Location löschen'})
     @ApiResponse({status: 204, description: 'Location erfolgreich gelöscht'})
-    async remove(@Param('id') id: string) {
-        return this.locationsService.remove(id);
+    @ApiResponse({status: 403, description: 'Keine Berechtigung'})
+    async remove(@Param('id') id: string, @Request() req) {
+        return this.locationsService.remove(id, req.user.userId);
     }
 }

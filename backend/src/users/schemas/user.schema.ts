@@ -3,15 +3,15 @@ import { Document } from 'mongoose';
 
 export type UserDocument = User & Document;
 
-@Schema()
+@Schema({ timestamps: true })
 export class User {
-    @Prop({ required: true })
+    @Prop({ required: true, unique: true })
     username: string;
 
     @Prop({ required: true })
     password: string;
 
-    @Prop()
+    @Prop({ unique: true, sparse: true })
     email?: string;
 
     @Prop()
@@ -25,6 +25,12 @@ export class User {
 
     @Prop()
     name?: string;
+
+    @Prop({ default: 'none' })
+    avatar?: string;
+
+    @Prop({ unique: true, sparse: true })
+    id?: number;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

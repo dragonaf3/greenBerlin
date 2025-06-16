@@ -14,8 +14,6 @@ const FALLBACK_URI = 'mongodb+srv://DEIN_USERNAME:DEIN_PASSWORT@DEINE_CLUSTER_UR
                 console.log('Using MongoDB connection URI:', uri); // Debug-Log
                 return {
                     uri,
-                    useNewUrlParser: true,
-                    useUnifiedTopology: true,
                 };
             },
             inject: [ConfigService],

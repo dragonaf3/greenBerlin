@@ -44,10 +44,15 @@ export class UsersService {
     }
 
     // Neuen Benutzer erstellen
-    async create(createUserDto: CreateUserDto): Promise<string> {
+    async create(createUserDto: CreateUserDto): Promise<User> {
         const createdUser = new this.userModel(createUserDto);
         const savedUser = await createdUser.save();
-        return (savedUser._id as mongoose.Types.ObjectId).toString();
+        return savedUser;
+    }
+
+    // Benutzer nach Benutzername finden (für JWT Auth)
+    async findByUsername(username: string): Promise<User | null> {
+        return await this.userModel.findOne({ username }).exec();
     }
 
     // Benutzer löschen
