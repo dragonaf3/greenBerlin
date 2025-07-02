@@ -120,12 +120,17 @@ const LocationsListScreen: React.FC = () => {
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {locations.map((location) => (
-                        <div key={location._id} className="card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow">
-                            <figure className="h-48">
+                        <div key={location._id} className="card bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.02]">
+                            <figure className="h-48 overflow-hidden">
                                 <img 
                                     src={location.image ? `http://localhost:8000${location.image}` : noImage} 
                                     alt={location.name}
-                                    className="w-full h-full object-cover"
+                                    className="w-full h-full object-cover transition-transform duration-300 hover:scale-110 cursor-pointer"
+                                    loading="lazy"
+                                    onError={(e) => {
+                                        const target = e.target as HTMLImageElement;
+                                        target.src = noImage;
+                                    }}
                                 />
                             </figure>
                             <div className="card-body">
