@@ -10,6 +10,7 @@ import LocationDetailScreen from './components/locationDetailScreen/LocationDeta
 import UpdateLocationScreen from './components/updateLocationScreen/UpdateLocationScreen';
 import CreateLocationScreen from './components/createLocationScreen/CreateLocationScreen';
 import AboutScreen from './components/aboutScreen/AboutScreen';
+import PrivacyScreen from './components/privacyScreen/PrivacyScreen';
 import ErrorScreen from './components/errorScreen/ErrorScreen';
 import './App.css';
 
@@ -62,6 +63,7 @@ const AppContent: React.FC = () => {
                         } 
                     />
                     <Route path="/about" element={<AboutScreen />} />
+                    <Route path="/privacy" element={<PrivacyScreen />} />
                     <Route path="/error" element={<ErrorScreen />} />
                     <Route 
                         path="/" 

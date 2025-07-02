@@ -85,10 +85,10 @@ const AboutScreen: React.FC = () => {
                     </div>
                 </div>
 
-                {/* Legal */}
+                {/* Legal - Impressum */}
                 <div className="card bg-base-100 shadow-xl">
                     <div className="card-body">
-                        <h2 className="card-title text-2xl mb-6">Impressum & Datenschutz</h2>
+                        <h2 className="card-title text-2xl mb-6">Impressum</h2>
                         
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                             <div>
@@ -104,17 +104,14 @@ const AboutScreen: React.FC = () => {
                             </div>
                             
                             <div>
-                                <h3 className="font-semibold mb-3">Datenschutz</h3>
+                                <h3 className="font-semibold mb-3">Rechtliche Hinweise</h3>
                                 <p className="text-base-content/70 text-sm mb-3">
-                                    Wir nehmen den Schutz Ihrer persönlichen Daten ernst. Diese Anwendung sammelt 
-                                    nur die für die Funktionalität erforderlichen Daten.
+                                    Diese Anwendung dient der Erfassung und Verwaltung von Standortdaten 
+                                    für umweltfreundliche Orte in Berlin.
                                 </p>
                                 <p className="text-base-content/70 text-sm">
-                                    <strong>Erhobene Daten:</strong><br />
-                                    • Benutzername und Passwort (verschlüsselt)<br />
-                                    • Optional: E-Mail, Vor- und Nachname<br />
-                                    • Standortdaten, die Sie eingeben<br />
-                                    • Hochgeladene Bilder
+                                    Für Datenschutzinformationen besuchen Sie unsere 
+                                    <Link to="/privacy" className="link link-primary ml-1">Datenschutzseite</Link>.
                                 </p>
                             </div>
                         </div>
