@@ -8,6 +8,7 @@ const LocationsListScreen: React.FC = () => {
     const [locations, setLocations] = useState<Location[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
+    const [likeCounts, setLikeCounts] = useState<{[key: string]: number}>({});
     const { user, logout } = useAuth();
     const navigate = useNavigate();
 
@@ -16,6 +17,13 @@ const LocationsListScreen: React.FC = () => {
             setError('');
             const data = await apiService.getLocations();
             setLocations(data);
+            
+            // Initialize like counts to 0 (no persistence)
+            const counts: {[key: string]: number} = {};
+            data.forEach(location => {
+                counts[location._id] = 0;
+            });
+            setLikeCounts(counts);
         } catch (err) {
             console.error('Error fetching locations:', err);
             setError('Fehler beim Laden der Standorte');
@@ -43,6 +51,13 @@ const LocationsListScreen: React.FC = () => {
     const formatDate = (dateString?: string) => {
         if (!dateString) return 'Unbekannt';
         return new Date(dateString).toLocaleDateString('de-DE');
+    };
+
+    const handleLike = (locationId: string) => {
+        setLikeCounts(prev => ({ 
+            ...prev, 
+            [locationId]: (prev[locationId] || 0) + 1 
+        }));
     };
 
     if (loading) {
@@ -153,6 +168,21 @@ const LocationsListScreen: React.FC = () => {
                                         ))}
                                     </div>
                                 )}
+
+                                {/* Like Counter */}
+                                <div className="flex items-center justify-between mt-3">
+                                    <div className="flex items-center gap-2">
+                                        <button 
+                                            onClick={() => handleLike(location._id)}
+                                            className="btn btn-xs btn-primary"
+                                        >
+                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" fill="currentColor" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                                            </svg>
+                                        </button>
+                                        <span className="text-xs text-base-content/60">{likeCounts[location._id] || 0}</span>
+                                    </div>
+                                </div>
 
                                 <div className="card-actions justify-end mt-4">
                                     <Link 

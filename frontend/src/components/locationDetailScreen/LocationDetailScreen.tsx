@@ -10,6 +10,7 @@ const LocationDetailScreen: React.FC = () => {
     const [loading, setLoading] = useState(true);
     const [deleteLoading, setDeleteLoading] = useState(false);
     const [error, setError] = useState('');
+    const [likeCount, setLikeCount] = useState(0);
     const { user, token } = useAuth();
     const navigate = useNavigate();
 
@@ -24,6 +25,8 @@ const LocationDetailScreen: React.FC = () => {
                 setError('');
                 const data = await apiService.getLocation(id);
                 setLocation(data);
+                // Initialize like count to 0 (no persistence)
+                setLikeCount(0);
             } catch (err) {
                 console.error('Error fetching location:', err);
                 setError('Fehler beim Laden des Standorts');
@@ -73,6 +76,10 @@ const LocationDetailScreen: React.FC = () => {
     const formatCoordinates = (lat?: number, lng?: number) => {
         if (lat === undefined || lng === undefined) return null;
         return `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
+    };
+
+    const handleLike = () => {
+        setLikeCount(prev => prev + 1);
     };
 
     if (loading) {
@@ -229,6 +236,26 @@ const LocationDetailScreen: React.FC = () => {
                                         </div>
                                     </div>
                                 )}
+
+                                <div className="divider"></div>
+
+                                <div className="divider"></div>
+
+                                {/* Like Counter */}
+                                <div className="flex items-center justify-between">
+                                    <div className="flex items-center gap-2">
+                                        <button 
+                                            onClick={handleLike}
+                                            className="btn btn-sm btn-primary"
+                                        >
+                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                                            </svg>
+                                            Like
+                                        </button>
+                                        <span className="text-sm font-medium">{likeCount} {likeCount === 1 ? 'Like' : 'Likes'}</span>
+                                    </div>
+                                </div>
 
                                 <div className="divider"></div>
 
