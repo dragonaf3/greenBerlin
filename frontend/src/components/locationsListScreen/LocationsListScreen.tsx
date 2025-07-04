@@ -53,6 +53,16 @@ const LocationsListScreen: React.FC = () => {
         return new Date(dateString).toLocaleDateString('de-DE');
     };
 
+    const getOwnerName = (location: Location) => {
+        if (!location.user) return 'Unbekannt';
+        
+        if (typeof location.user === 'string') {
+            return 'Unbekannt';
+        }
+        
+        return location.user.name || location.user.firstName || location.user.username || 'Unbekannt';
+    };
+
     const handleLike = (locationId: string) => {
         setLikeCounts(prev => ({ 
             ...prev, 
@@ -75,7 +85,7 @@ const LocationsListScreen: React.FC = () => {
                 <div>
                     <h1 className="text-3xl font-bold text-primary">Standorte</h1>
                     <p className="text-base-content/70 mt-1">
-                        Willkommen, {user?.name || user?.username}!
+                        Willkommen, {user?.name || user?.firstName || user?.username}!
                     </p>
                 </div>
                 <div className="flex gap-2">
@@ -155,6 +165,12 @@ const LocationsListScreen: React.FC = () => {
                                             {location.street}, {location.zip} {location.city}
                                         </p>
                                     )}
+                                    <p className="flex items-center gap-1 mt-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                        </svg>
+                                        Ersteller: {getOwnerName(location)}
+                                    </p>
                                     <p className="flex items-center gap-1 mt-1">
                                         <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3a1 1 0 011-1h6a1 1 0 011 1v4" />

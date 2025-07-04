@@ -29,7 +29,13 @@ interface Location {
   longitude?: number;
   image?: string;
   tags?: string[];
-  user?: string;
+  user?: string | {
+    _id: string;
+    username: string;
+    firstName?: string;
+    lastName?: string;
+    name?: string;
+  };
   date?: string;
   createdAt?: string;
   updatedAt?: string;

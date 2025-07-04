@@ -40,7 +40,9 @@ const LocationDetailScreen: React.FC = () => {
         fetchLocation();
     }, [id, navigate]);
 
-    const canEdit = location && user && (location.user === user._id);
+    const canEdit = location && user && (
+        typeof location.user === 'string' ? location.user === user._id : location.user?._id === user._id
+    );
 
     const handleDelete = async () => {
         if (!location || !token || !canEdit) return;
@@ -77,6 +79,16 @@ const LocationDetailScreen: React.FC = () => {
     const formatCoordinates = (lat?: number, lng?: number) => {
         if (lat === undefined || lng === undefined) return null;
         return `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
+    };
+
+    const getOwnerName = (location: Location) => {
+        if (!location.user) return 'Unbekannt';
+        
+        if (typeof location.user === 'string') {
+            return 'Unbekannt';
+        }
+        
+        return location.user.name || location.user.firstName || location.user.username || 'Unbekannt';
     };
 
     const handleLike = () => {
@@ -273,6 +285,7 @@ const LocationDetailScreen: React.FC = () => {
                                 <div className="divider"></div>
 
                                 <div className="text-sm text-base-content/60">
+                                    <p><strong>Ersteller:</strong> {getOwnerName(location)}</p>
                                     <p><strong>Erstellt:</strong> {formatDate(location.createdAt)}</p>
                                     {location.updatedAt && location.updatedAt !== location.createdAt && (
                                         <p><strong>Aktualisiert:</strong> {formatDate(location.updatedAt)}</p>

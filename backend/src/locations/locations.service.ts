@@ -26,14 +26,14 @@ export class LocationsService {
 
     // Alle Locations abrufen
     async findAll(): Promise<Location[]> {
-        return this.locationModel.find().exec();
+        return this.locationModel.find().populate('user', 'username firstName lastName name').exec();
     }
 
     // Eine Location nach ID abrufen
     async findOne(id: string): Promise<Location | null> {
         try {
             const objId = new mongoose.Types.ObjectId(id);
-            return this.locationModel.findOne({_id: objId}).exec();
+            return this.locationModel.findOne({_id: objId}).populate('user', 'username firstName lastName name').exec();
         } catch (error) {
             return null;
         }

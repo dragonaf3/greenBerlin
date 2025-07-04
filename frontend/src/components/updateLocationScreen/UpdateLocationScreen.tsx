@@ -39,7 +39,8 @@ const UpdateLocationScreen: React.FC = () => {
                 const location = await apiService.getLocation(id);
                 
                 // Check if user can edit this location
-                if (!user || location.user !== user._id) {
+                const locationUserId = typeof location.user === 'string' ? location.user : location.user?._id;
+                if (!user || locationUserId !== user._id) {
                     navigate('/error');
                     return;
                 }
