@@ -30,7 +30,10 @@ async function bootstrap() {
     SwaggerModule.setup('api', app, document);
 
     // Starte Server
-    await app.listen(8000);
+    const port = 8000;
+    const host = '45.133.9.54';
+
+    await app.listen(port, host);
     console.log(`Application is running on: ${await app.getUrl()}`);
 }
 
