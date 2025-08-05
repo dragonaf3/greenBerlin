@@ -4,9 +4,18 @@ import {ValidationPipe} from '@nestjs/common';
 import {DocumentBuilder, SwaggerModule} from '@nestjs/swagger';
 import {join} from 'path';
 import {NestExpressApplication} from "@nestjs/platform-express";
+import * as fs from "node:fs";
 
 async function bootstrap() {
-    const app = await NestFactory.create<NestExpressApplication>(AppModule);
+
+    const httpsOptions = {
+        key: fs.readFileSync('./src/cert/key.pem'),
+        cert: fs.readFileSync('./src/cert/cert.pem'),
+    };
+
+    const app = await NestFactory.create<NestExpressApplication>(AppModule, {
+        httpsOptions,
+    });
 
     // Globale Validierung für alle Endpunkte
     app.useGlobalPipes(new ValidationPipe({
