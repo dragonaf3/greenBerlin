@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:8000';
+const API_BASE_URL = 'http://45.133.9.54:8000';
 
 interface LoginResponse {
   user: {
